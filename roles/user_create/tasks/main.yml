@@ -1,0 +1,6 @@
+--- 
+- name: create new user
+  user: 
+    name=manager
+    group=wheel
+    
