@@ -1,0 +1,20 @@
+---
+- name: Create new user
+  user: 
+    name=manager
+    group=wheel
+
+- name: Install mtr
+  package:
+    name: mtr
+    state: latest
+
+- name: install tcpdump
+  package:
+    name: tcpdump
+    state: latest
+
+- name: install nano
+  package:
+    name: nano
+    state: latest
