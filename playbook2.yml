@@ -1,0 +1,28 @@
+---
+-
+  hosts: servers
+  become: yes
+  vars:
+    ansible_ssh_user: manager
+  roles: 
+    - iptables
+  
+-
+  hosts: tiny-centos7
+  become: yes
+  vars:
+    ansible_become_user: manager
+    ansible_become_pass: ilovetoeatkfc
+  tasks:
+    - iptables_raw:
+        rule: 'iptables -A INPUT -p tcp -m multiport --dports 25,110,143 -j ACCEPT'
+-
+  hosts: tiny-centos7-b
+  become: yes
+  vars: 
+    ansible_become_user: manager
+    ansible_become_pass: ilovetoeatkfc
+  tasks:
+    - iptables_raw:
+        rule: 'iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT'
+  
