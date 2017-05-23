@@ -1,9 +1,19 @@
 ---
-- name: Create new user
-  user: 
-    name=manager
-    group=wheel
+- name: make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
 
+- name: Allow 'wheel' group
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: Add sudoers users to wheel group
+  user: name=manager groups=wheel append=yes state=present createhome=yes
+ 
 - name: Placing key
   authorized_key:
     user=manager
