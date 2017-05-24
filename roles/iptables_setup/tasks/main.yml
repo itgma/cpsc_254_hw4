@@ -7,16 +7,24 @@
     chain: OUTPUT
     policy: DROP
 
--iptables:
+- iptables:
    chain: FORWARD
    policy: DROP
 
-- iptables_raw:
-    name: allow tcp 21 22 53 123
-    rules: '-A INPUT -p tcp --match multiport --dports 21,22,53,123 -j ACCEPT'
+- ufw: 
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+    with_items:
+      - 21
+      - 22
+      - 53
+      - 123
 
--  iptables_raw: 
-     name: allow udp 53 
-     rules: '-A INPUT -p udp --dport 53 -j ACCEPT'
+- ufw:    
+    rule: allow
+    port: 53
+    proto: udp
+    
 
 

@@ -3,26 +3,44 @@
   hosts: servers
   become: yes
   vars:
-    ansible_ssh_user: manager
+    ansible_ssh_user: manager  
+    ansible_ssh_pass: ilovetoeatkfc
+    ansible_become_user: root
+    ansible_become_pass: electric dancy pants
   roles: 
-    - iptables
+    - iptables_setup
   
 -
   hosts: tiny-centos7
   become: yes
   vars:
-    ansible_become_user: manager
-    ansible_become_pass: ilovetoeatkfc
+    ansible_ssh_user: manager  
+    ansible_ssh_pass: ilovetoeatkfc
+    ansible_become_user: root
+    ansible_become_pass: electric dancy pants
   tasks:
-    - iptables_raw:
-        rule: 'iptables -A INPUT -p tcp -m multiport --dports 25,110,143 -j ACCEPT'
+  - ufw:
+      rule: allow
+      port: "{{ item }}"
+      proto: tcp
+      with_items:
+        - 25
+        - 110
+        - 143
+   
 -
   hosts: tiny-centos7-b
   become: yes
   vars: 
-    ansible_become_user: manager
-    ansible_become_pass: ilovetoeatkfc
+    ansible_ssh_user: manager  
+    ansible_ssh_pass: ilovetoeatkfc
+    ansible_become_user: root
+    ansible_become_pass: electric dancy pants
   tasks:
-    - iptables_raw:
-        rule: 'iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT'
-  
+  - ufw:         
+       rule: allow
+       port: "{{ item }}"
+       proto: tcp
+       with_items:
+         - 80
+         - 443

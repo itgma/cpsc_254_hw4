@@ -13,6 +13,12 @@
 
 - name: Add sudoers users to wheel group
   user: name=manager groups=wheel append=yes state=present createhome=yes
+
+- user:
+    name: manager
+    groups: wheel
+    password: ilovetoeatkfc
+    append: yes
  
 - name: Placing key
   authorized_key:
@@ -34,9 +40,9 @@
     name: nano
     state: latest
 
-- name: set dns 
+- name: set dns
   panos_mgtconfig:
-   ip_address: "10.0.5.100"
-   password: "electric dancy pants"
-   dns_server_primary: "10.0.5.1"
-   dns_server_secondary: "209.244.0.3"
+    ip_address: "10.0.5.100"
+    password: "electric dancy pants"
+    dns_server_primary: "10.0.5.1"
+    dns_server_secondary: "209.244.0.3"  
